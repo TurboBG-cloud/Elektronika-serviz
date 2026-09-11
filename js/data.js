@@ -1,4 +1,4 @@
-// Data layer for ЕЛЕКТРОНИКА СЕРВИЗ — backed by a real Supabase table so products
+// Data layer for MBI Electronics — backed by a real Supabase table so products
 // sync across every device instead of staying local to one browser.
 
 const SUPABASE_URL = 'https://vbrykymzztspdbkwzkyo.supabase.co';
