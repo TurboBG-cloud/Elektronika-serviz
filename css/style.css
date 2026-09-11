@@ -635,11 +635,24 @@ button{font-family:inherit;}
 .stagger > *:nth-child(8){transition-delay:490ms;}
 
 /* Admin */
-.admin-shell{min-height:100vh;background:var(--bg);}
+.admin-shell{position:relative;min-height:100vh;background:var(--bg);overflow:hidden;}
+.admin-shell::before{
+  content:'';position:absolute;top:60px;right:-60px;width:440px;height:440px;
+  background:url(../assets/fcb-crest.png) center/contain no-repeat;
+  opacity:.07;pointer-events:none;transform:rotate(-8deg);z-index:0;
+}
+.admin-shell > *{position:relative;z-index:1;}
 .admin-login{
+  position:relative;overflow:hidden;
   min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--navy-950);padding:24px;
 }
+.admin-login::before{
+  content:'';position:absolute;inset:0;
+  background:url(../assets/fcb-crest.png) center/55% no-repeat;
+  opacity:.16;pointer-events:none;
+}
 .admin-login-card{
+  position:relative;z-index:1;
   background:#fff;border-radius:var(--radius-lg);padding:44px 40px;width:100%;max-width:380px;box-shadow:var(--shadow-lg);
 }
 .admin-login-card .brand{margin-bottom:28px;justify-content:center;}
