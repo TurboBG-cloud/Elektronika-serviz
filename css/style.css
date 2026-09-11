@@ -37,8 +37,8 @@
 .hue-layer{
   position:fixed;inset:0;z-index:0;pointer-events:none;
   background:
-    radial-gradient(900px 700px at 15% 0%, hsla(var(--scroll-hue),90%,55%,.10), transparent 65%),
-    radial-gradient(900px 700px at 100% 60%, hsla(calc(var(--scroll-hue) + 140),85%,55%,.08), transparent 65%);
+    radial-gradient(1100px 900px at 12% -5%, hsla(var(--scroll-hue),92%,58%,.32), transparent 60%),
+    radial-gradient(1100px 900px at 100% 55%, hsla(var(--scroll-hue),92%,58%,.22), transparent 60%);
 }
 .site-header,.hero,.marquee,.trust-strip,main,.site-footer{position:relative;z-index:1;}
 
@@ -437,19 +437,18 @@ button{font-family:inherit;}
 }
 .marquee-track span.dot{color:var(--blue-500);padding:0;}
 @keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
-@media (prefers-reduced-motion:reduce){.marquee-track{animation:none;}}
 
 /* Bento services grid */
-.bento-grid{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:150px;gap:16px;}
+.bento-grid{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:206px;gap:16px;}
 .bento-tile{
   position:relative;overflow:hidden;cursor:pointer;
   border-radius:var(--radius-lg);border:2px solid var(--navy-950);box-shadow:5px 5px 0 var(--navy-950);
-  padding:24px;display:flex;flex-direction:column;
+  padding:22px;display:flex;flex-direction:column;
   transition:transform .2s var(--ease),box-shadow .2s var(--ease);
 }
 .bento-tile:hover{transform:translate(-3px,-3px);box-shadow:8px 8px 0 var(--navy-950);}
-.bento-tile .icon-badge{background:rgba(255,255,255,.18);margin-bottom:16px;flex-shrink:0;}
-.bento-tile .icon-badge svg{color:#fff;}
+.bento-tile .icon-badge{width:40px;height:40px;background:rgba(255,255,255,.18);margin-bottom:12px;flex-shrink:0;}
+.bento-tile .icon-badge svg{width:20px;height:20px;color:#fff;}
 .bento-tile .bento-text{margin-top:auto;}
 .bento-tile h3{margin-bottom:4px;}
 .bento-tile p{font-size:.87rem;margin:0;max-width:32ch;}
@@ -468,8 +467,8 @@ button{font-family:inherit;}
 .bento-tile.b5 .icon-badge svg{color:var(--navy-950);}
 @media (max-width:900px){
   .bento-grid{grid-template-columns:1fr 1fr;grid-auto-rows:auto;}
-  .bento-tile{grid-column:auto !important;grid-row:auto !important;min-height:170px;}
-  .bento-tile.b1{grid-column:1/3 !important;min-height:200px;}
+  .bento-tile{grid-column:auto !important;grid-row:auto !important;min-height:210px;}
+  .bento-tile.b1{grid-column:1/3 !important;min-height:230px;}
 }
 @media (max-width:560px){
   .bento-grid{grid-template-columns:1fr;}

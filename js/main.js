@@ -26,25 +26,30 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const tiles = document.querySelectorAll('.device-tile');
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const root = document.documentElement;
 
-  if (!reduceMotion) {
-    let ticking = false;
-    window.addEventListener('scroll', () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        const y = window.scrollY;
-        tiles.forEach((tile, i) => {
-          const speed = 0.06 + (i % 4) * 0.03;
-          tile.style.transform = `translateY(${y * speed * -0.3}px)`;
-        });
-        const docHeight = Math.max(document.body.scrollHeight - window.innerHeight, 1);
-        const progress = Math.min(y / docHeight, 1);
-        root.style.setProperty('--scroll-hue', 18 + progress * 200);
-        ticking = false;
-      });
-    }, { passive: true });
+  function updateOnScroll() {
+    const y = window.scrollY;
+    tiles.forEach((tile, i) => {
+      const speed = 0.06 + (i % 4) * 0.03;
+      tile.style.transform = `translateY(${y * speed * -0.3}px)`;
+    });
+    const docHeight = Math.max(document.body.scrollHeight - window.innerHeight, 1);
+    const progress = Math.min(y / docHeight, 1);
+    // Sweep orange -> red -> magenta -> purple -> blue, skipping the muddy yellow/green band.
+    const hue = (18 - progress * 160 + 360) % 360;
+    root.style.setProperty('--scroll-hue', hue);
   }
+
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      updateOnScroll();
+      ticking = false;
+    });
+  }, { passive: true });
+
+  updateOnScroll();
 });
