@@ -91,14 +91,15 @@
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/icons.js"></script>
 <script src="js/data.js"></script>
 <script src="js/render.js"></script>
 <script src="js/main.js"></script>
 <script>
-(function(){
+(async function(){
   const id = new URLSearchParams(location.search).get('id');
-  const product = id ? getProduct(id) : null;
+  const product = id ? await getProduct(id) : null;
   const wrap = document.getElementById('product-wrap');
 
   if (!product) {
@@ -158,8 +159,9 @@
     </div>
   </section>`;
 
-  const related = getProducts().filter(p => p.id !== product.id && p.brand === product.brand).slice(0, 4);
-  const fallback = related.length ? related : getProducts().filter(p => p.id !== product.id).slice(0, 4);
+  const allProducts = await getProducts();
+  const related = allProducts.filter(p => p.id !== product.id && p.brand === product.brand).slice(0, 4);
+  const fallback = related.length ? related : allProducts.filter(p => p.id !== product.id).slice(0, 4);
   if (fallback.length) {
     document.getElementById('related-section').style.display = 'block';
     document.getElementById('related-grid').innerHTML = fallback.map(productCardHTML).join('');

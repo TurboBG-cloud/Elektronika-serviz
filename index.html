@@ -300,13 +300,16 @@
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/icons.js"></script>
 <script src="js/data.js"></script>
 <script src="js/render.js"></script>
 <script src="js/main.js"></script>
 <script>
-  const featured = getProducts().slice(0, 4);
-  document.getElementById('featured-grid').innerHTML = featured.map(productCardHTML).join('');
+  (async () => {
+    const featured = (await getProducts()).slice(0, 4);
+    document.getElementById('featured-grid').innerHTML = featured.map(productCardHTML).join('');
+  })();
 </script>
 </body>
 </html>

@@ -133,15 +133,16 @@
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/icons.js"></script>
 <script src="js/data.js"></script>
 <script src="js/render.js"></script>
 <script src="js/main.js"></script>
 <script>
-(function(){
+(async function(){
   const params = new URLSearchParams(location.search);
-  const all = getProducts();
-  const brands = [...new Set(all.map(p => p.brand))].sort();
+  const allProducts = await getProducts();
+  const brands = [...new Set(allProducts.map(p => p.brand))].sort();
   const brandWrap = document.getElementById('brand-filters');
   brandWrap.innerHTML = brands.map(b => `<label class="filter-opt"><input type="checkbox" name="brand" value="${b}"> ${b}</label>`).join('');
 
@@ -164,7 +165,7 @@
   }
 
   function applyFilters() {
-    let list = getProducts();
+    let list = allProducts;
     const conditions = getChecked('condition');
     const brandsChecked = getChecked('brand');
     const min = parseFloat(priceMin.value);

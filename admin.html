@@ -123,6 +123,7 @@
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/icons.js"></script>
 <script src="js/data.js"></script>
 <script src="js/main.js"></script>
@@ -177,8 +178,9 @@
   document.getElementById('cancel-form').addEventListener('click', () => { renderList(); switchView('list'); });
 
   // List rendering
-  function renderList(){
-    const products = getProducts().sort((a,b) => b.createdAt - a.createdAt);
+  async function renderList(){
+    document.getElementById('admin-table-body').innerHTML = `<tr><td colspan="6" style="text-align:center;color:var(--ink-faint);padding:40px;">Зареждане...</td></tr>`;
+    const products = (await getProducts()).sort((a,b) => b.createdAt - a.createdAt);
     const total = products.length;
     const available = products.filter(p => p.status === 'available').length;
     const used = products.filter(p => p.condition === 'used').length;
@@ -267,23 +269,25 @@
     document.getElementById('f-desc').value = product ? product.description : '';
   }
 
-  window.editProduct = function(id){
-    openForm(getProduct(id));
+  window.editProduct = async function(id){
+    openForm(await getProduct(id));
     switchView('form');
   };
-  window.removeProduct = function(id){
-    const p = getProduct(id);
+  window.removeProduct = async function(id){
+    const p = await getProduct(id);
     if (!p) return;
     if (confirm(`Сигурни ли сте, че искате да изтриете „${p.brand} ${p.model}“?`)) {
-      deleteProduct(id);
+      await deleteProduct(id);
       renderList();
     }
   };
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
+    const submitBtn = form.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
     const id = document.getElementById('f-id').value || uid();
-    const existing = document.getElementById('f-id').value ? getProduct(id) : null;
+    const existing = document.getElementById('f-id').value ? await getProduct(id) : null;
     const product = {
       id,
       brand: document.getElementById('f-brand').value.trim(),
@@ -299,7 +303,8 @@
       images: currentImages,
       createdAt: existing ? existing.createdAt : Date.now()
     };
-    upsertProduct(product);
+    await upsertProduct(product);
+    submitBtn.disabled = false;
     formMsg.innerHTML = '<div class="form-msg success">Продуктът е запазен успешно.</div>';
     setTimeout(() => { renderList(); switchView('list'); }, 500);
   });
