@@ -26,7 +26,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const tiles = document.querySelectorAll('.device-tile');
-  if (tiles.length && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const root = document.documentElement;
+
+  if (!reduceMotion) {
     let ticking = false;
     window.addEventListener('scroll', () => {
       if (ticking) return;
@@ -37,6 +40,9 @@ document.addEventListener('DOMContentLoaded', () => {
           const speed = 0.06 + (i % 4) * 0.03;
           tile.style.transform = `translateY(${y * speed * -0.3}px)`;
         });
+        const docHeight = Math.max(document.body.scrollHeight - window.innerHeight, 1);
+        const progress = Math.min(y / docHeight, 1);
+        root.style.setProperty('--scroll-hue', 18 + progress * 200);
         ticking = false;
       });
     }, { passive: true });
