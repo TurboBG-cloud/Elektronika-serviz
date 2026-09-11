@@ -192,9 +192,10 @@ button{font-family:inherit;}
 .fan-badge-front{background:#fff;font-size:19px;line-height:1;animation:ball-idle 3.2s ease-in-out infinite;}
 .fan-badge:hover .fan-badge-front{animation:none;}
 .fan-badge-back{
-  transform:rotateY(180deg);overflow:hidden;
+  transform:rotateY(180deg);overflow:hidden;background:#fff;
 }
 .fan-badge-back svg{width:100%;height:100%;display:block;}
+.fan-badge-back img{width:82%;height:82%;object-fit:contain;display:block;}
 @keyframes ball-idle{
   0%,100%{transform:rotate(0deg);}
   50%{transform:rotate(-12deg);}
