@@ -39,6 +39,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Sweep orange -> red -> magenta -> purple -> blue, skipping the muddy yellow/green band.
     const hue = (18 - progress * 160 + 360) % 360;
     root.style.setProperty('--scroll-hue', hue);
+    // Tint only the light background surfaces (text/icon colors are separate vars, untouched).
+    root.style.setProperty('--bg', `hsl(${hue} 65% 93%)`);
+    root.style.setProperty('--bg-tint', `hsl(${hue} 55% 89%)`);
+    root.style.setProperty('--paper', `hsl(${hue} 45% 98%)`);
   }
 
   let ticking = false;

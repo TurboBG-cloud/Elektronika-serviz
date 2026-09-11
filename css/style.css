@@ -34,11 +34,6 @@
   --scroll-hue:18;
 }
 
-.hue-layer{
-  position:fixed;inset:0;z-index:9999;pointer-events:none;
-  background:hsla(var(--scroll-hue),95%,50%,.6);
-  mix-blend-mode:color;
-}
 
 *,*::before,*::after{box-sizing:border-box;}
 html{scroll-behavior:smooth;}
@@ -47,6 +42,7 @@ body{
   font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
   color:var(--ink);
   background:var(--bg);
+  transition:background .08s linear;
   -webkit-font-smoothing:antialiased;
   line-height:1.55;
 }
