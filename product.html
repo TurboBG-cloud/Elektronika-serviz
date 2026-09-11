@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="page-title">Продукт — Електроника Сервиз</title>
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skiplink" href="#main">Към съдържанието</a>
+
+<header class="site-header">
+  <div class="container header-row">
+    <a href="index.html" class="brand">
+      <img src="assets/logo.svg" alt="Електроника Сервиз">
+      <span class="brand-text">
+        <span class="brand-name">ЕЛЕКТРОНИКА СЕРВИЗ</span>
+        <span class="brand-sub">Мездра</span>
+      </span>
+    </a>
+    <nav class="main-nav">
+      <a href="index.html">Начало</a>
+      <a href="store.html" class="nav-tab active">Магазин</a>
+      <a href="index.html#services">Услуги</a>
+      <a href="contact.html#faq">Въпроси</a>
+      <a href="contact.html">Контакти</a>
+    </nav>
+    <div class="header-actions">
+      <a class="header-phone" href="tel:+359888000000">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span>+359 888 000 000</span>
+      </a>
+      <button class="nav-toggle" aria-label="Меню" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <div id="product-wrap"></div>
+
+  <section class="section" id="related-section" style="display:none;">
+    <div class="container">
+      <div class="section-head reveal">
+        <div><span class="eyebrow">Още предложения</span><h2>Подобни продукти</h2></div>
+      </div>
+      <div class="product-grid" id="related-grid"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-top">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="brand"><img src="assets/logo.svg" alt="Електроника Сервиз"><span class="brand-text"><span class="brand-name">ЕЛЕКТРОНИКА СЕРВИЗ</span></span></a>
+        <p>Продажба на телефони и професионален ремонт на телефони, конзоли, компютри, лаптопи и телевизори в Мездра.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Навигация</h4>
+        <a href="index.html">Начало</a>
+        <a href="store.html">Магазин</a>
+        <a href="contact.html">Контакти</a>
+        <a href="admin.html">Вход за администратор</a>
+      </div>
+      <div class="footer-col">
+        <h4>Магазин</h4>
+        <a href="store.html?condition=new">Нови телефони</a>
+        <a href="store.html?condition=used">Употребявани</a>
+        <a href="index.html#services">Ремонт и услуги</a>
+      </div>
+      <div class="footer-col">
+        <h4>Контакти</h4>
+        <ul class="footer-contact">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg><span>ул. „Примерна“ 1, Мездра, 3100</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span>+359 888 000 000</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <span>© <span id="year"></span> Електроника Сервиз. Всички права запазени.</span>
+    <span>Мездра, България</span>
+  </div>
+</footer>
+
+<script src="js/icons.js"></script>
+<script src="js/data.js"></script>
+<script src="js/render.js"></script>
+<script src="js/main.js"></script>
+<script>
+(function(){
+  const id = new URLSearchParams(location.search).get('id');
+  const product = id ? getProduct(id) : null;
+  const wrap = document.getElementById('product-wrap');
+
+  if (!product) {
+    wrap.innerHTML = `
+      <section class="section-tight">
+        <div class="container">
+          <div class="empty-state">
+            <h2 style="margin-bottom:10px;">Продуктът не е намерен</h2>
+            <p>Възможно е да е бил премахнат или продаден.</p>
+            <a href="store.html" class="btn btn-primary" style="margin-top:10px;">Обратно към магазина</a>
+          </div>
+        </div>
+      </section>`;
+    return;
+  }
+
+  document.title = `${product.brand} ${product.model} — Електроника Сервиз`;
+
+  const hasImg = product.images && product.images.length;
+  const gallery = hasImg
+    ? `<img src="${product.images[0]}" alt="${product.brand} ${product.model}">`
+    : `<span class="ph-icon">${ICONS.smartphone}</span>`;
+  const pdTileClass = hasImg ? '' : ' ' + tileClassFor(product.id);
+
+  const badge = product.status === 'sold'
+    ? `<span class="badge badge-sold" style="position:static;display:inline-flex;">Продадено</span>`
+    : product.condition === 'new'
+      ? `<span class="badge badge-new" style="position:static;display:inline-flex;">Ново</span>`
+      : `<span class="badge badge-used" style="position:static;display:inline-flex;">Употребявано</span>`;
+
+  const specsRows = (product.specs || []).map(([k,v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join('');
+  const waMsg = encodeURIComponent(`Здравейте, интересувам се от ${product.brand} ${product.model} (${formatPrice(product.price)})`);
+
+  wrap.innerHTML = `
+  <div class="page-hero" style="padding:36px 0;">
+    <div class="container">
+      <div class="breadcrumb"><a href="index.html">Начало</a> / <a href="store.html">Магазин</a> / ${product.brand} ${product.model}</div>
+    </div>
+  </div>
+  <section class="section-tight">
+    <div class="container pd-grid">
+      <div class="pd-media${pdTileClass}">${gallery}</div>
+      <div>
+        <span class="pd-brand">${product.brand}</span>
+        <h1 style="margin:6px 0 10px;">${product.model}</h1>
+        <div style="margin-bottom:6px;">${badge}</div>
+        <div class="pd-price">${product.status === 'sold' ? 'Продадено' : formatPrice(product.price)}
+          ${product.oldPrice ? `<small style="font-size:1rem;font-weight:500;color:var(--ink-faint);text-decoration:line-through;margin-left:8px;">${formatPrice(product.oldPrice)}</small>` : ''}
+        </div>
+        <p class="lede">${product.description || ''}</p>
+        <div class="pd-actions">
+          <a href="tel:+359888000000" class="btn btn-primary">Обадете се за резервация</a>
+          <a href="https://wa.me/359888000000?text=${waMsg}" target="_blank" rel="noopener" class="btn btn-outline">Запитване през WhatsApp</a>
+        </div>
+        <table class="spec-table">${specsRows}</table>
+      </div>
+    </div>
+  </section>`;
+
+  const related = getProducts().filter(p => p.id !== product.id && p.brand === product.brand).slice(0, 4);
+  const fallback = related.length ? related : getProducts().filter(p => p.id !== product.id).slice(0, 4);
+  if (fallback.length) {
+    document.getElementById('related-section').style.display = 'block';
+    document.getElementById('related-grid').innerHTML = fallback.map(productCardHTML).join('');
+  }
+})();
+</script>
+</body>
+</html>

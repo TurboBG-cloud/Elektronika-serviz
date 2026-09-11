@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Администрация — Електроника Сервиз</title>
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="admin-shell">
+
+<div id="login-view" class="admin-login">
+  <div class="admin-login-card">
+    <div class="brand">
+      <img src="assets/logo.svg" alt="Електроника Сервиз" style="width:40px;height:40px;">
+      <span class="brand-text"><span class="brand-name">Администрация</span><span class="brand-sub">Електроника Сервиз</span></span>
+    </div>
+    <div id="login-msg"></div>
+    <form id="login-form">
+      <div class="field">
+        <label for="password">Парола</label>
+        <input type="password" id="password" placeholder="Въведете парола" autofocus>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Вход</button>
+    </form>
+    <p style="font-size:.78rem;color:var(--ink-faint);margin-top:18px;text-align:center;">Демо парола: <code>mezdra2026</code></p>
+    <p style="font-size:.8rem;text-align:center;margin-top:6px;"><a href="index.html" style="color:var(--blue-600);">← Обратно към сайта</a></p>
+  </div>
+</div>
+
+<div id="dashboard-view" style="display:none;">
+  <div class="admin-topbar">
+    <a href="index.html" class="brand"><img src="assets/logo.svg" alt="" style="width:32px;height:32px;"><span class="brand-text"><span class="brand-name" style="font-size:.9rem;">ЕЛЕКТРОНИКА СЕРВИЗ</span></span></a>
+    <button class="btn btn-ghost btn-sm" id="logout-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+      Изход
+    </button>
+  </div>
+  <div class="admin-body">
+    <aside class="admin-sidebar">
+      <a href="#" class="nav-link active" data-view="list">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+        Табло
+      </a>
+      <a href="#" class="nav-link" data-view="form">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        Добави телефон
+      </a>
+      <a href="store.html" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+        Виж магазина
+      </a>
+    </aside>
+
+    <div class="admin-main">
+      <div class="demo-note">Демо режим: продуктите се пазят локално в този браузър (localStorage). Когато сайтът се свърже с истинска база данни, всичко въведено тук ще се пренесе в реалния магазин.</div>
+
+      <div id="view-list">
+        <div class="admin-header-row">
+          <h2 style="margin:0;">Табло</h2>
+          <button class="btn btn-accent btn-sm" id="add-new-btn">+ Нов телефон</button>
+        </div>
+        <div class="stat-row" id="stat-row"></div>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead><tr><th>Продукт</th><th>Марка</th><th>Състояние</th><th>Статус</th><th>Цена</th><th></th></tr></thead>
+            <tbody id="admin-table-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="view-form" style="display:none;">
+        <div class="admin-header-row">
+          <h2 style="margin:0;" id="form-title">Нов телефон</h2>
+          <button class="btn btn-ghost btn-sm" id="back-to-list">← Обратно към таблото</button>
+        </div>
+        <div class="admin-form-card">
+          <div id="form-msg"></div>
+          <form id="product-form">
+            <input type="hidden" id="f-id">
+            <div class="field-row">
+              <div class="field"><label for="f-brand">Марка</label><input id="f-brand" placeholder="напр. Apple" required></div>
+              <div class="field"><label for="f-model">Модел</label><input id="f-model" placeholder="напр. iPhone 13 128GB" required></div>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label for="f-condition">Състояние</label>
+                <select id="f-condition"><option value="new">Ново</option><option value="used">Употребявано</option></select>
+              </div>
+              <div class="field">
+                <label for="f-status">Статус</label>
+                <select id="f-status"><option value="available">Наличен</option><option value="reserved">Резервиран</option><option value="sold">Продаден</option></select>
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field"><label for="f-price">Цена (лв.)</label><input id="f-price" type="number" min="0" required></div>
+              <div class="field"><label for="f-oldprice">Стара цена (по избор)</label><input id="f-oldprice" type="number" min="0"></div>
+            </div>
+            <div class="field-row">
+              <div class="field"><label for="f-storage">Памет</label><input id="f-storage" placeholder="напр. 128GB"></div>
+              <div class="field"><label for="f-color">Цвят</label><input id="f-color" placeholder="напр. Черен"></div>
+            </div>
+            <div class="field">
+              <label for="f-desc">Описание</label>
+              <textarea id="f-desc" rows="4" placeholder="Кратко описание на състоянието и комплекта"></textarea>
+            </div>
+            <div class="field">
+              <label>Снимка</label>
+              <label class="image-upload">
+                <input type="file" id="f-image" accept="image/*">
+                <span style="font-size:.85rem;color:var(--ink-soft);">Натиснете, за да качите снимка на телефона</span>
+              </label>
+              <div class="image-thumbs" id="image-thumbs"></div>
+            </div>
+            <div style="display:flex;gap:12px;margin-top:8px;">
+              <button type="submit" class="btn btn-primary">Запази продукта</button>
+              <button type="button" class="btn btn-outline" id="cancel-form">Отказ</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/icons.js"></script>
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+<script>
+(function(){
+  const loginView = document.getElementById('login-view');
+  const dashboardView = document.getElementById('dashboard-view');
+  const loginForm = document.getElementById('login-form');
+  const loginMsg = document.getElementById('login-msg');
+
+  function showDashboard(){
+    loginView.style.display = 'none';
+    dashboardView.style.display = 'block';
+    renderList();
+  }
+
+  if (isAdminAuthed()) showDashboard();
+
+  loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const pwd = document.getElementById('password').value;
+    if (adminLogin(pwd)) {
+      loginMsg.innerHTML = '';
+      showDashboard();
+    } else {
+      loginMsg.innerHTML = '<div class="form-msg error">Грешна парола. Опитайте отново.</div>';
+    }
+  });
+
+  document.getElementById('logout-btn').addEventListener('click', () => {
+    adminLogout();
+    location.reload();
+  });
+
+  // View switching
+  const viewList = document.getElementById('view-list');
+  const viewForm = document.getElementById('view-form');
+  const navLinks = document.querySelectorAll('.admin-sidebar .nav-link');
+
+  function switchView(view){
+    navLinks.forEach(l => l.classList.toggle('active', l.dataset.view === view));
+    viewList.style.display = view === 'list' ? 'block' : 'none';
+    viewForm.style.display = view === 'form' ? 'block' : 'none';
+  }
+  navLinks.forEach(link => link.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (link.dataset.view === 'form') openForm(null);
+    switchView(link.dataset.view);
+  }));
+  document.getElementById('add-new-btn').addEventListener('click', () => { openForm(null); switchView('form'); });
+  document.getElementById('back-to-list').addEventListener('click', () => { renderList(); switchView('list'); });
+  document.getElementById('cancel-form').addEventListener('click', () => { renderList(); switchView('list'); });
+
+  // List rendering
+  function renderList(){
+    const products = getProducts().sort((a,b) => b.createdAt - a.createdAt);
+    const total = products.length;
+    const available = products.filter(p => p.status === 'available').length;
+    const used = products.filter(p => p.condition === 'used').length;
+    const totalValue = products.filter(p => p.status !== 'sold').reduce((s,p) => s + Number(p.price || 0), 0);
+
+    document.getElementById('stat-row').innerHTML = `
+      <div class="stat-card"><b>${total}</b><span>Общо продукти</span></div>
+      <div class="stat-card"><b>${available}</b><span>Налични</span></div>
+      <div class="stat-card"><b>${used}</b><span>Употребявани</span></div>
+      <div class="stat-card"><b>${formatPrice(totalValue)}</b><span>Стойност на наличностите</span></div>`;
+
+    const statusLabel = { available: 'Наличен', reserved: 'Резервиран', sold: 'Продаден' };
+    document.getElementById('admin-table-body').innerHTML = products.map(p => `
+      <tr>
+        <td>
+          <div class="row-name">
+            <div class="admin-thumb">${p.images && p.images[0] ? `<img src="${p.images[0]}">` : ''}</div>
+            <span>${p.brand} ${p.model}</span>
+          </div>
+        </td>
+        <td>${p.brand}</td>
+        <td>${p.condition === 'new' ? 'Ново' : 'Употребявано'}</td>
+        <td>${statusLabel[p.status] || p.status}</td>
+        <td>${formatPrice(p.price)}</td>
+        <td>
+          <div class="row-actions">
+            <button class="icon-btn" title="Виж в магазина" onclick="window.open('product.html?id=${p.id}','_blank')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+            <button class="icon-btn" title="Редактирай" onclick="editProduct('${p.id}')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+            </button>
+            <button class="icon-btn" title="Изтрий" onclick="removeProduct('${p.id}')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg>
+            </button>
+          </div>
+        </td>
+      </tr>`).join('') || `<tr><td colspan="6" style="text-align:center;color:var(--ink-faint);padding:40px;">Все още няма добавени продукти.</td></tr>`;
+  }
+
+  // Form handling
+  let currentImages = [];
+  const form = document.getElementById('product-form');
+  const formMsg = document.getElementById('form-msg');
+  const imageInput = document.getElementById('f-image');
+  const imageThumbs = document.getElementById('image-thumbs');
+
+  function renderThumbs(){
+    imageThumbs.innerHTML = currentImages.map((src, i) => `
+      <div class="thumb"><img src="${src}"><button type="button" data-i="${i}" title="Премахни">×</button></div>`).join('');
+    imageThumbs.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        currentImages.splice(Number(btn.dataset.i), 1);
+        renderThumbs();
+      });
+    });
+  }
+
+  imageInput.addEventListener('change', () => {
+    const file = imageInput.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      currentImages.push(e.target.result);
+      renderThumbs();
+    };
+    reader.readAsDataURL(file);
+    imageInput.value = '';
+  });
+
+  function openForm(product){
+    formMsg.innerHTML = '';
+    form.reset();
+    currentImages = product && product.images ? [...product.images] : [];
+    renderThumbs();
+    document.getElementById('form-title').textContent = product ? 'Редактирай телефон' : 'Нов телефон';
+    document.getElementById('f-id').value = product ? product.id : '';
+    document.getElementById('f-brand').value = product ? product.brand : '';
+    document.getElementById('f-model').value = product ? product.model : '';
+    document.getElementById('f-condition').value = product ? product.condition : 'new';
+    document.getElementById('f-status').value = product ? product.status : 'available';
+    document.getElementById('f-price').value = product ? product.price : '';
+    document.getElementById('f-oldprice').value = product && product.oldPrice ? product.oldPrice : '';
+    document.getElementById('f-storage').value = product ? product.storage : '';
+    document.getElementById('f-color').value = product ? product.color : '';
+    document.getElementById('f-desc').value = product ? product.description : '';
+  }
+
+  window.editProduct = function(id){
+    openForm(getProduct(id));
+    switchView('form');
+  };
+  window.removeProduct = function(id){
+    const p = getProduct(id);
+    if (!p) return;
+    if (confirm(`Сигурни ли сте, че искате да изтриете „${p.brand} ${p.model}“?`)) {
+      deleteProduct(id);
+      renderList();
+    }
+  };
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const id = document.getElementById('f-id').value || uid();
+    const existing = document.getElementById('f-id').value ? getProduct(id) : null;
+    const product = {
+      id,
+      brand: document.getElementById('f-brand').value.trim(),
+      model: document.getElementById('f-model').value.trim(),
+      condition: document.getElementById('f-condition').value,
+      status: document.getElementById('f-status').value,
+      price: Number(document.getElementById('f-price').value),
+      oldPrice: document.getElementById('f-oldprice').value ? Number(document.getElementById('f-oldprice').value) : null,
+      storage: document.getElementById('f-storage').value.trim(),
+      color: document.getElementById('f-color').value.trim(),
+      description: document.getElementById('f-desc').value.trim(),
+      specs: existing ? existing.specs : [],
+      images: currentImages,
+      createdAt: existing ? existing.createdAt : Date.now()
+    };
+    upsertProduct(product);
+    formMsg.innerHTML = '<div class="form-msg success">Продуктът е запазен успешно.</div>';
+    setTimeout(() => { renderList(); switchView('list'); }, 500);
+  });
+})();
+</script>
+</body>
+</html>
