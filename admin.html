@@ -18,13 +18,16 @@
     <div id="login-msg"></div>
     <form id="login-form">
       <div class="field">
+        <label for="email">Имейл</label>
+        <input type="email" id="email" placeholder="you@example.com" autocomplete="username" autofocus>
+      </div>
+      <div class="field">
         <label for="password">Парола</label>
-        <input type="password" id="password" placeholder="Въведете парола" autofocus>
+        <input type="password" id="password" placeholder="Въведете парола" autocomplete="current-password">
       </div>
       <button type="submit" class="btn btn-primary btn-block">Вход</button>
     </form>
-    <p style="font-size:.78rem;color:var(--ink-faint);margin-top:18px;text-align:center;">Демо парола: <code>mezdra2026</code></p>
-    <p style="font-size:.8rem;text-align:center;margin-top:6px;"><a href="index.html" style="color:var(--blue-600);">← Обратно към сайта</a></p>
+    <p style="font-size:.8rem;text-align:center;margin-top:18px;"><a href="index.html" style="color:var(--blue-600);">← Обратно към сайта</a></p>
   </div>
 </div>
 
@@ -93,8 +96,8 @@
               </div>
             </div>
             <div class="field-row">
-              <div class="field"><label for="f-price">Цена (лв.)</label><input id="f-price" type="number" min="0" required></div>
-              <div class="field"><label for="f-oldprice">Стара цена (по избор)</label><input id="f-oldprice" type="number" min="0"></div>
+              <div class="field"><label for="f-price">Цена (€)</label><input id="f-price" type="number" min="0" required></div>
+              <div class="field"><label for="f-oldprice">Стара цена (€, по избор)</label><input id="f-oldprice" type="number" min="0"></div>
             </div>
             <div class="field-row">
               <div class="field"><label for="f-storage">Памет</label><input id="f-storage" placeholder="напр. 128GB"></div>
@@ -128,7 +131,7 @@
 <script src="js/data.js"></script>
 <script src="js/main.js"></script>
 <script>
-(function(){
+(async function(){
   const loginView = document.getElementById('login-view');
   const dashboardView = document.getElementById('dashboard-view');
   const loginForm = document.getElementById('login-form');
@@ -140,21 +143,26 @@
     renderList();
   }
 
-  if (isAdminAuthed()) showDashboard();
+  if (await isAdminAuthed()) showDashboard();
 
-  loginForm.addEventListener('submit', (e) => {
+  loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+    const submitBtn = loginForm.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    const email = document.getElementById('email').value.trim();
     const pwd = document.getElementById('password').value;
-    if (adminLogin(pwd)) {
+    const errorMsg = await adminLogin(email, pwd);
+    submitBtn.disabled = false;
+    if (!errorMsg) {
       loginMsg.innerHTML = '';
       showDashboard();
     } else {
-      loginMsg.innerHTML = '<div class="form-msg error">Грешна парола. Опитайте отново.</div>';
+      loginMsg.innerHTML = '<div class="form-msg error">Грешен имейл или парола. Опитайте отново.</div>';
     }
   });
 
-  document.getElementById('logout-btn').addEventListener('click', () => {
-    adminLogout();
+  document.getElementById('logout-btn').addEventListener('click', async () => {
+    await adminLogout();
     location.reload();
   });
 

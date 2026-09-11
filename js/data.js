@@ -5,9 +5,6 @@ const SUPABASE_URL = 'https://vbrykymzztspdbkwzkyo.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZicnlreW16enRzcGRia3d6a3lvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkxMTkyOTAsImV4cCI6MjEwNDY5NTI5MH0.90f0sPEKngkG8_D7yQkPKAUOhcF_0AsKxxfobbiM2X4';
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-const ADMIN_KEY = 'es_admin_auth_v1';
-const ADMIN_PASSWORD = 'mezdra2026'; // demo-only password, replace with real Supabase Auth later
-
 function rowToProduct(row) {
   return {
     id: row.id,
@@ -70,23 +67,21 @@ async function deleteProduct(id) {
 }
 
 function formatPrice(n) {
-  return new Intl.NumberFormat('bg-BG', { maximumFractionDigits: 0 }).format(n) + ' лв.';
+  return new Intl.NumberFormat('bg-BG', { maximumFractionDigits: 0 }).format(n) + ' €';
 }
 
 function uid() {
   return 'p' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
 }
 
-function isAdminAuthed() {
-  return sessionStorage.getItem(ADMIN_KEY) === '1';
+async function isAdminAuthed() {
+  const { data } = await sb.auth.getSession();
+  return !!data.session;
 }
-function adminLogin(password) {
-  if (password === ADMIN_PASSWORD) {
-    sessionStorage.setItem(ADMIN_KEY, '1');
-    return true;
-  }
-  return false;
+async function adminLogin(email, password) {
+  const { error } = await sb.auth.signInWithPassword({ email, password });
+  return error ? error.message : null;
 }
-function adminLogout() {
-  sessionStorage.removeItem(ADMIN_KEY);
+async function adminLogout() {
+  await sb.auth.signOut();
 }
