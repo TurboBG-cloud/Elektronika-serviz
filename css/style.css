@@ -35,12 +35,10 @@
 }
 
 .hue-layer{
-  position:fixed;inset:0;z-index:0;pointer-events:none;
-  background:
-    radial-gradient(1100px 900px at 12% -5%, hsla(var(--scroll-hue),92%,58%,.32), transparent 60%),
-    radial-gradient(1100px 900px at 100% 55%, hsla(var(--scroll-hue),92%,58%,.22), transparent 60%);
+  position:fixed;inset:0;z-index:9999;pointer-events:none;
+  background:hsla(var(--scroll-hue),95%,50%,.6);
+  mix-blend-mode:color;
 }
-.site-header,.hero,.marquee,.trust-strip,main,.site-footer{position:relative;z-index:1;}
 
 *,*::before,*::after{box-sizing:border-box;}
 html{scroll-behavior:smooth;}
