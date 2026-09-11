@@ -637,9 +637,9 @@ button{font-family:inherit;}
 /* Admin */
 .admin-shell{position:relative;min-height:100vh;background:var(--bg);overflow:hidden;}
 .admin-shell::before{
-  content:'';position:absolute;top:60px;right:-60px;width:440px;height:440px;
-  background:url(../assets/fcb-crest.png) center/contain no-repeat;
-  opacity:.07;pointer-events:none;transform:rotate(-8deg);z-index:0;
+  content:'';position:fixed;inset:0;
+  background:url(../assets/fcb-crest.png) center/65% no-repeat;
+  opacity:.09;pointer-events:none;z-index:0;
 }
 .admin-shell > *{position:relative;z-index:1;}
 .admin-login{
@@ -648,8 +648,8 @@ button{font-family:inherit;}
 }
 .admin-login::before{
   content:'';position:absolute;inset:0;
-  background:url(../assets/fcb-crest.png) center/55% no-repeat;
-  opacity:.16;pointer-events:none;
+  background:url(../assets/fcb-crest.png) center/85% no-repeat;
+  opacity:.25;pointer-events:none;
 }
 .admin-login-card{
   position:relative;z-index:1;
