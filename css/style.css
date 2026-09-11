@@ -173,12 +173,32 @@ button{font-family:inherit;}
 }
 .header-phone svg{width:16px;height:16px;color:var(--blue-500);}
 .fan-badge{
-  width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-  border:2px solid var(--navy-950);box-shadow:2px 2px 0 var(--navy-950);overflow:hidden;flex-shrink:0;
-  transition:transform .25s var(--ease),box-shadow .25s var(--ease);
+  width:36px;height:36px;flex-shrink:0;display:block;position:relative;
+  perspective:240px;
 }
-.fan-badge:hover{transform:rotate(-10deg) scale(1.1);box-shadow:3px 3px 0 var(--navy-950);}
-.fan-badge svg{width:100%;height:100%;display:block;}
+.fan-badge-inner{
+  position:relative;width:100%;height:100%;transform-style:preserve-3d;
+  transition:transform .7s cubic-bezier(.34,1.56,.64,1);
+}
+.fan-badge:hover .fan-badge-inner{transform:rotateY(180deg);}
+.fan-badge:active .fan-badge-inner{transform:rotateY(180deg) scale(.9);}
+.fan-badge-face{
+  position:absolute;inset:0;border-radius:50%;backface-visibility:hidden;
+  display:flex;align-items:center;justify-content:center;
+  border:2px solid var(--navy-950);box-shadow:2px 2px 0 var(--navy-950);
+  transition:box-shadow .25s var(--ease);
+}
+.fan-badge:hover .fan-badge-face{box-shadow:3px 3px 0 var(--navy-950);}
+.fan-badge-front{background:#fff;font-size:19px;line-height:1;animation:ball-idle 3.2s ease-in-out infinite;}
+.fan-badge:hover .fan-badge-front{animation:none;}
+.fan-badge-back{
+  transform:rotateY(180deg);overflow:hidden;
+}
+.fan-badge-back svg{width:100%;height:100%;display:block;}
+@keyframes ball-idle{
+  0%,100%{transform:rotate(0deg);}
+  50%{transform:rotate(-12deg);}
+}
 
 .nav-toggle{
   display:none;background:none;border:none;cursor:pointer;padding:6px;
