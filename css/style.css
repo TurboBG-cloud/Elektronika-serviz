@@ -441,18 +441,24 @@ button{font-family:inherit;}
   transition:transform .2s var(--ease),box-shadow .2s var(--ease);
 }
 .bento-tile:hover{transform:translate(-3px,-3px);box-shadow:8px 8px 0 var(--navy-950);}
+.bento-tile::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg, transparent 35%, rgba(0,0,0,.4) 100%);pointer-events:none;}
+.bento-tile.b5::after{background:linear-gradient(180deg, transparent 35%, rgba(255,255,255,.55) 100%);}
+.bento-tile > *{position:relative;z-index:1;}
 .bento-tile .icon-badge{width:40px;height:40px;background:rgba(255,255,255,.18);margin-bottom:12px;flex-shrink:0;}
 .bento-tile .icon-badge svg{width:20px;height:20px;color:#fff;}
 .bento-tile .bento-text{margin-top:auto;}
 .bento-tile h3{margin-bottom:4px;}
 .bento-tile p{font-size:.87rem;margin:0;max-width:32ch;}
-.bento-tile.b1{grid-column:1/4;grid-row:span 2;background:var(--navy-950);}
+.bento-tile.b1{grid-column:1/4;grid-row:span 2;background-color:var(--navy-950);background-image:url(../assets/services/tile-phones.jpg);}
 .bento-tile.b1 h3{color:#fff;font-size:1.5rem;}
 .bento-tile.b1 p{color:#B9C3D4;}
-.bento-tile.b2{grid-column:4/7;grid-row:1;background:var(--blue-500);}
-.bento-tile.b3{grid-column:4/7;grid-row:2;background:var(--accent2);}
-.bento-tile.b4{grid-column:1/4;grid-row:3;background:var(--accent3);}
-.bento-tile.b5{grid-column:4/7;grid-row:3;background:var(--accent4);}
+.bento-tile.b2{grid-column:4/7;grid-row:1;background-color:var(--blue-500);background-image:url(../assets/services/tile-consoles.jpg);}
+.bento-tile.b3{grid-column:4/7;grid-row:2;background-color:var(--accent2);background-image:url(../assets/services/tile-pc.jpg);}
+.bento-tile.b4{grid-column:1/4;grid-row:3;background-color:var(--accent3);background-image:url(../assets/services/tile-tv.jpg);}
+.bento-tile.b5{grid-column:4/7;grid-row:3;background-color:var(--accent4);background-image:url(../assets/services/tile-laptop.jpg);}
+.bento-tile.b1,.bento-tile.b2,.bento-tile.b3,.bento-tile.b4,.bento-tile.b5{
+  background-size:cover;background-position:center;background-blend-mode:multiply;
+}
 .bento-tile.b2 h3,.bento-tile.b3 h3,.bento-tile.b4 h3,.bento-tile.b5 h3{color:#fff;}
 .bento-tile.b2 p,.bento-tile.b3 p,.bento-tile.b4 p{color:rgba(255,255,255,.88);}
 .bento-tile.b5 p{color:rgba(21,22,26,.75);}
